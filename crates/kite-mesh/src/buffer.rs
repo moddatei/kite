@@ -4,8 +4,9 @@
 //! awaiting opportunistic encounters with adjacent nodes in radio range.
 
 use kite_core::error::{Error, Result};
-use kite_core::identity::NodeAddress;
 use kite_core::frame::KiteFrame;
+use kite_core::identity::NodeAddress;
+
 
 /// Maximum payload buffer size stored within a single in-flight bundle.
 pub const MAX_BUNDLE_PAYLOAD: usize = 256;
@@ -117,8 +118,8 @@ impl<const CAPACITY: usize> BundleRingBuffer<CAPACITY> {
         dispatchable
     }
 
-
     /// Clean up bundles whose TTL has expired.
+
     pub fn decay_and_prune(&mut self) {
         for slot in &mut self.storage {
             if let Some(bundle) = slot {

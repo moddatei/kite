@@ -12,13 +12,18 @@ use std::thread;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 #[derive(Parser, Debug)]
-#[command(name = "kited", version = "0.1.0", about = "Kite Tetherless Mesh Protocol Daemon")]
+#[command(
+    name = "kited",
+    version = "0.1.0",
+    about = "Kite Tetherless Mesh Protocol Daemon"
+)]
 struct Cli {
     /// Hex-encoded 8-byte node address override (e.g. "0x0102030405060708")
     #[arg(short, long)]
     address: Option<String>,
 
     /// Physical RF interface or virtual driver (e.g., "mon0", "lora0", "virtual")
+
     #[arg(short, long, default_value = "virtual")]
     interface: String,
 
@@ -121,4 +126,3 @@ fn main() {
 
     info!("Daemon event loop completed successfully.");
 }
-

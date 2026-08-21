@@ -1,8 +1,8 @@
 //! Epidemic discovery and opportunistic link-quality routing.
 
 use kite_core::error::Result;
-use kite_core::identity::NodeAddress;
 use kite_core::frame::KiteFrame;
+use kite_core::identity::NodeAddress;
 
 /// Link quality record for an adjacent physical RF peer.
 #[derive(Debug, Clone, Copy)]
@@ -30,13 +30,9 @@ impl<const MAX_NEIGHBORS: usize> NeighborTable<MAX_NEIGHBORS> {
     }
 
     /// Record receipt of a beacon or frame from an adjacent peer.
-    pub fn update_neighbor(
-        &mut self,
-        address: NodeAddress,
-        rssi_dbm: i8,
-        timestamp: u64,
-    ) {
+    pub fn update_neighbor(&mut self, address: NodeAddress, rssi_dbm: i8, timestamp: u64) {
         // Look for existing entry
+
         for slot in &mut self.entries {
             if let Some(entry) = slot {
                 if entry.address == address {
@@ -129,4 +125,3 @@ impl<const CAPACITY: usize, const MAX_NEIGHBORS: usize> EpidemicRouter<CAPACITY,
         }
     }
 }
-
