@@ -96,7 +96,7 @@ impl NodeAddress {
             let digit = c.to_digit(16).ok_or(Error::InvalidAddress)? as u8;
             let target_pos = pad_len + i;
             let byte_idx = target_pos / 2;
-            if target_pos % 2 == 0 {
+            if target_pos.is_multiple_of(2) {
                 bytes[byte_idx] |= digit << 4;
             } else {
                 bytes[byte_idx] |= digit;
