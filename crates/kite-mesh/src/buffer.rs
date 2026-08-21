@@ -7,8 +7,8 @@ use kite_core::error::{Error, Result};
 use kite_core::frame::KiteFrame;
 use kite_core::identity::NodeAddress;
 
-
 /// Maximum payload buffer size stored within a single in-flight bundle.
+
 pub const MAX_BUNDLE_PAYLOAD: usize = 256;
 
 /// An individual bundle stored for opportunistic dissemination.
@@ -119,8 +119,8 @@ impl<const CAPACITY: usize> BundleRingBuffer<CAPACITY> {
     }
 
     /// Clean up bundles whose TTL has expired.
-
     pub fn decay_and_prune(&mut self) {
+
         for slot in &mut self.storage {
             if let Some(bundle) = slot {
                 if bundle.ttl <= 1 {
