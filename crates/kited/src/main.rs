@@ -43,8 +43,7 @@ fn main() {
     let args = Cli::parse();
 
     let node_addr = if let Some(addr_str) = args.address {
-        NodeAddress::from_hex(&addr_str)
-            .unwrap_or_else(|_| NodeAddress::from_bytes([0x42; 8]))
+        NodeAddress::from_hex(&addr_str).unwrap_or_else(|_| NodeAddress::from_bytes([0x42; 8]))
     } else {
         NodeAddress::from_bytes([0x0A, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77])
     };

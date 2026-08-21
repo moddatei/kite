@@ -106,8 +106,8 @@ fn main() {
         }
 
         Commands::Whisper { dst, message, ttl } => {
-            let target_addr = NodeAddress::from_hex(&dst)
-                .unwrap_or_else(|_| NodeAddress::from_bytes([0xFF; 8]));
+            let target_addr =
+                NodeAddress::from_hex(&dst).unwrap_or_else(|_| NodeAddress::from_bytes([0xFF; 8]));
 
             let self_addr =
                 NodeAddress::from_bytes([0x0A, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77]);
