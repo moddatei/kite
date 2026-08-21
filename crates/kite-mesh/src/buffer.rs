@@ -59,6 +59,12 @@ pub struct BundleRingBuffer<const CAPACITY: usize> {
     next_bundle_id: u64,
 }
 
+impl<const CAPACITY: usize> Default for BundleRingBuffer<CAPACITY> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<const CAPACITY: usize> BundleRingBuffer<CAPACITY> {
     pub const fn new() -> Self {
         const NONE_SLOT: Option<StoredBundle> = None;
@@ -104,14 +110,12 @@ impl<const CAPACITY: usize> BundleRingBuffer<CAPACITY> {
     /// Find bundles destined for or relevant to a specific discovered neighbor.
     pub fn get_dispatchable_bundles(&self, neighbor: &NodeAddress) -> Vec<&StoredBundle> {
         let mut dispatchable = Vec::new();
-        for slot in &self.storage {
-            if let Some(bundle) = slot {
-                if bundle.dst.is_broadcast()
-                    || &bundle.dst == neighbor
-                    || bundle.replication_budget > 0
-                {
-                    dispatchable.push(bundle);
-                }
+        for bundle in self.storage.iter().flatten() {
+            if bundle.dst.is_broadcast()
+                || &bundle.dst == neighbor
+                || bundle.replication_budget > 0
+            {
+                dispatchable.push(bundle);
             }
         }
         dispatchable

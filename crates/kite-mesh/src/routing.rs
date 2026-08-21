@@ -20,6 +20,12 @@ pub struct NeighborTable<const MAX_NEIGHBORS: usize> {
     count: usize,
 }
 
+impl<const MAX_NEIGHBORS: usize> Default for NeighborTable<MAX_NEIGHBORS> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<const MAX_NEIGHBORS: usize> NeighborTable<MAX_NEIGHBORS> {
     pub const fn new() -> Self {
         const NONE_ENTRY: Option<NeighborEntry> = None;
@@ -32,16 +38,13 @@ impl<const MAX_NEIGHBORS: usize> NeighborTable<MAX_NEIGHBORS> {
     /// Record receipt of a beacon or frame from an adjacent peer.
     pub fn update_neighbor(&mut self, address: NodeAddress, rssi_dbm: i8, timestamp: u64) {
         // Look for existing entry
-
-        for slot in &mut self.entries {
-            if let Some(entry) = slot {
-                if entry.address == address {
-                    entry.last_seen_timestamp = timestamp;
-                    entry.rssi_dbm = rssi_dbm;
-                    entry.packet_delivery_ratio =
-                        ((entry.packet_delivery_ratio as u16 * 7 + 100) / 8) as u8;
-                    return;
-                }
+        for entry in self.entries.iter_mut().flatten() {
+            if entry.address == address {
+                entry.last_seen_timestamp = timestamp;
+                entry.rssi_dbm = rssi_dbm;
+                entry.packet_delivery_ratio =
+                    ((entry.packet_delivery_ratio as u16 * 7 + 100) / 8) as u8;
+                return;
             }
         }
 
