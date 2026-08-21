@@ -43,10 +43,18 @@ fn main() {
             println!("{}", "   KITE MESH NODE STATUS (kited-local)        ".bold().cyan());
             println!("{}", "═══════════════════════════════════════════════".cyan());
             println!("{:<24} : {}", "Node Address", "0x0a11223344556677".green());
-            println!("{:<24} : {}", "Protocol Version", format!("0x{:02X}", PROTOCOL_VERSION).yellow());
+            println!(
+                "{:<24} : {}",
+                "Protocol Version",
+                format!("0x{:02X}", PROTOCOL_VERSION).yellow()
+            );
             println!("{:<24} : {}", "Active Physical Links", "1 (Virtual RF / mon0)".white());
             println!("{:<24} : {}", "Discovered Neighbors", "4 peers in RF range".bright_blue());
-            println!("{:<24} : {}", "Buffered Bundles", "2 pending store-and-forward".bright_magenta());
+            println!(
+                "{:<24} : {}",
+                "Buffered Bundles",
+                "2 pending store-and-forward".bright_magenta()
+            );
             println!("{:<24} : {}", "Crypto Ratchet State", "Active (Noise_XX)".green());
             println!("{}", "───────────────────────────────────────────────".dimmed());
             println!("{:<18} {:<10} {:<10} {:<8}", "PEER ADDRESS", "RSSI", "DELIVERY", "HOPS");
@@ -63,7 +71,8 @@ fn main() {
             arr[..copy_len].copy_from_slice(&dst_bytes[..copy_len]);
             let target_addr = NodeAddress::from_bytes(arr);
 
-            let self_addr = NodeAddress::from_bytes([0x0A, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77]);
+            let self_addr =
+                NodeAddress::from_bytes([0x0A, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77]);
 
             let frame = KiteFrame {
                 version: PROTOCOL_VERSION,
@@ -84,8 +93,11 @@ fn main() {
             println!("  Wire Size    : {} bytes (including 28B header+CRC)", len);
             println!("  Payload      : \"{}\"", message.italic());
             println!("  Flags        : ENCRYPTED | STORE_AND_FORWARD");
-            println!("  Queueing     : Ingested into local ring buffer for opportunistic RF emission.");
+            println!(
+                "  Queueing     : Ingested into local ring buffer for opportunistic RF emission."
+            );
         }
+
 
         Commands::DumpBuffer => {
             println!("{}", "=== Opportunistic Store-Carry-Forward Ring Buffer ===".bold());

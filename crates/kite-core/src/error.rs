@@ -37,18 +37,25 @@ impl fmt::Display for Error {
         match self {
             Error::BufferTooShort => write!(f, "Buffer is too short to contain a valid Kite frame"),
             Error::BufferOverflow => write!(f, "Frame payload exceeds maximum MTU limit"),
-            Error::InvalidProtocolVersion(v) => write!(f, "Unsupported protocol version: 0x{:02X}", v),
+            Error::InvalidProtocolVersion(v) => {
+                write!(f, "Unsupported protocol version: 0x{:02X}", v)
+            }
             Error::InvalidFrameType(t) => write!(f, "Unknown frame type: 0x{:02X}", t),
-            Error::ChecksumMismatch => write!(f, "Frame integrity checksum or MAC validation failed"),
+            Error::ChecksumMismatch => {
+                write!(f, "Frame integrity checksum or MAC validation failed")
+            }
             Error::TtlExceeded => write!(f, "Frame hop limit exceeded (TTL expired)"),
             Error::ReplayDetected => write!(f, "Detected duplicate or replayed frame sequence"),
             Error::InvalidAddress => write!(f, "Malformed or invalid NodeAddress"),
-            Error::CryptoFailure => write!(f, "Cryptographic decryption or authentication failure"),
+            Error::CryptoFailure => {
+                write!(f, "Cryptographic decryption or authentication failure")
+            }
             Error::BufferFull => write!(f, "Opportunistic ring buffer at capacity"),
             Error::ChannelBusy => write!(f, "Physical RF transport medium is congested"),
         }
     }
 }
+
 
 #[cfg(feature = "std")]
 impl std::error::Error for Error {}

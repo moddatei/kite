@@ -42,7 +42,8 @@ impl<const MAX_NEIGHBORS: usize> NeighborTable<MAX_NEIGHBORS> {
                 if entry.address == address {
                     entry.last_seen_timestamp = timestamp;
                     entry.rssi_dbm = rssi_dbm;
-                    entry.packet_delivery_ratio = ((entry.packet_delivery_ratio as u16 * 7 + 100) / 8) as u8;
+                    entry.packet_delivery_ratio =
+                        ((entry.packet_delivery_ratio as u16 * 7 + 100) / 8) as u8;
                     return;
                 }
             }
@@ -101,7 +102,12 @@ impl<const CAPACITY: usize, const MAX_NEIGHBORS: usize> EpidemicRouter<CAPACITY,
     }
 
     /// Ingest an incoming over-the-air frame.
-    pub fn process_incoming_frame(&mut self, frame: &KiteFrame, rssi_dbm: i8, now: u64) -> Result<bool> {
+    pub fn process_incoming_frame(
+        &mut self,
+        frame: &KiteFrame,
+        rssi_dbm: i8,
+        now: u64,
+    ) -> Result<bool> {
         self.neighbors.update_neighbor(frame.src, rssi_dbm, now);
 
         if frame.dst == self.self_addr {
@@ -123,3 +129,4 @@ impl<const CAPACITY: usize, const MAX_NEIGHBORS: usize> EpidemicRouter<CAPACITY,
         }
     }
 }
+

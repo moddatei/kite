@@ -86,7 +86,11 @@ fn main() {
             let mut wire_buf = [0u8; 128];
             if let Ok(len) = beacon_frame.serialize_into(&mut wire_buf) {
                 let _ = transport.transmit(&wire_buf[..len]);
-                info!("[TX] Broadcasted beacon frame (seq={}, bytes={})", seq - 1, len);
+                info!(
+                    "[TX] Broadcasted beacon frame (seq={}, bytes={})",
+                    seq - 1,
+                    len
+                );
             }
         }
 
@@ -108,8 +112,13 @@ fn main() {
         }
 
         thread::sleep(Duration::from_millis(200));
-        info!("[HEARTBEAT] Tick {} complete. Active neighbors: {}", tick, router.neighbors.active_neighbors().len());
+        info!(
+            "[HEARTBEAT] Tick {} complete. Active neighbors: {}",
+            tick,
+            router.neighbors.active_neighbors().len()
+        );
     }
 
     info!("Daemon event loop completed successfully.");
 }
+

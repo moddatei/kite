@@ -106,13 +106,17 @@ impl<const CAPACITY: usize> BundleRingBuffer<CAPACITY> {
         let mut dispatchable = Vec::new();
         for slot in &self.storage {
             if let Some(bundle) = slot {
-                if bundle.dst.is_broadcast() || &bundle.dst == neighbor || bundle.replication_budget > 0 {
+                if bundle.dst.is_broadcast()
+                    || &bundle.dst == neighbor
+                    || bundle.replication_budget > 0
+                {
                     dispatchable.push(bundle);
                 }
             }
         }
         dispatchable
     }
+
 
     /// Clean up bundles whose TTL has expired.
     pub fn decay_and_prune(&mut self) {
