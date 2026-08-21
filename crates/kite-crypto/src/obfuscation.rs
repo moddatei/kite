@@ -20,7 +20,7 @@ impl StochasticMask {
         while offset < data.len() {
             let mut hasher = Sha256::new();
             hasher.update(ephemeral_seed);
-            hasher.update(&block_index.to_be_bytes());
+            hasher.update(block_index.to_be_bytes());
             let stream_block = hasher.finalize();
 
             let chunk_size = core::cmp::min(32, data.len() - offset);

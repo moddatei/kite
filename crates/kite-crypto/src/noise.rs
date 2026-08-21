@@ -11,7 +11,7 @@ use chacha20poly1305::aead::{AeadInPlace, KeyInit};
 use chacha20poly1305::{ChaCha20Poly1305, Key, Nonce, Tag};
 use kite_core::error::{Error, Result};
 use sha2::{Digest, Sha256};
-use x25519_dalek::{EphemeralSecret, PublicKey, StaticSecret};
+use x25519_dalek::{PublicKey, StaticSecret};
 
 pub const NOISE_PROTOCOL_NAME: &[u8] = b"Noise_XX_25519_ChaChaPoly_SHA256";
 pub const KEY_LEN: usize = 32;
@@ -136,7 +136,7 @@ impl SymmetricState {
 
     pub fn mix_key(&mut self, input_key_material: &[u8]) {
         let mut hasher = Sha256::new();
-        hasher.update(&self.ck);
+        hasher.update(self.ck);
         hasher.update(input_key_material);
         let output = hasher.finalize();
 
@@ -145,7 +145,7 @@ impl SymmetricState {
         next_ck.copy_from_slice(&output[0..32]);
 
         let mut k_hasher = Sha256::new();
-        k_hasher.update(&next_ck);
+        k_hasher.update(next_ck);
         k_hasher.update(b"k_deriv");
         next_k.copy_from_slice(&k_hasher.finalize());
 
@@ -155,20 +155,20 @@ impl SymmetricState {
 
     pub fn mix_hash(&mut self, data: &[u8]) {
         let mut hasher = Sha256::new();
-        hasher.update(&self.h);
+        hasher.update(self.h);
         hasher.update(data);
         self.h.copy_from_slice(&hasher.finalize());
     }
 
     pub fn split(&self) -> (CipherState, CipherState) {
         let mut h1 = Sha256::new();
-        h1.update(&self.ck);
+        h1.update(self.ck);
         h1.update(b"tx_key");
         let mut k1 = [0u8; 32];
         k1.copy_from_slice(&h1.finalize());
 
         let mut h2 = Sha256::new();
-        h2.update(&self.ck);
+        h2.update(self.ck);
         h2.update(b"rx_key");
         let mut k2 = [0u8; 32];
         k2.copy_from_slice(&h2.finalize());
