@@ -111,9 +111,7 @@ impl<const CAPACITY: usize> BundleRingBuffer<CAPACITY> {
     pub fn get_dispatchable_bundles(&self, neighbor: &NodeAddress) -> Vec<&StoredBundle> {
         let mut dispatchable = Vec::new();
         for bundle in self.storage.iter().flatten() {
-            if bundle.dst.is_broadcast()
-                || &bundle.dst == neighbor
-                || bundle.replication_budget > 0
+            if bundle.dst.is_broadcast() || &bundle.dst == neighbor || bundle.replication_budget > 0
             {
                 dispatchable.push(bundle);
             }
