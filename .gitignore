@@ -1,0 +1,14 @@
+/target
+**/*.rs.bk
+*.swp
+*.orig
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+__pycache__/
+*.pyc
+.env
+dist/
+build/

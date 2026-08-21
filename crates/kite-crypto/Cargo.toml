@@ -1,0 +1,18 @@
+[package]
+name = "kite-crypto"
+description = "Noise-XX cryptographic protocol, ratcheted cipher states, and stochastic obfuscation for Kite"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kite-core = { path = "../kite-core" }
+chacha20poly1305 = { version = "0.10", default-features = false, features = ["alloc"] }
+x25519-dalek = { version = "2.0", default-features = false, features = ["static_secrets"] }
+sha2 = { version = "0.10", default-features = false }
+rand_core = { version = "0.6", default-features = false }
+
+[dev-dependencies]
+rand = "0.8"

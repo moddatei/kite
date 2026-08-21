@@ -1,0 +1,16 @@
+[package]
+name = "kitectl"
+description = "CLI operator tool for the Kite mesh protocol"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kite-core = { path = "../kite-core" }
+kite-crypto = { path = "../kite-crypto" }
+kite-mesh = { path = "../kite-mesh" }
+clap = { version = "4.4", features = ["derive"] }
+colored = "2.1"
+hex = "0.4"

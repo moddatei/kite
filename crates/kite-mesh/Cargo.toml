@@ -1,0 +1,15 @@
+[package]
+name = "kite-mesh"
+description = "Opportunistic store-carry-forward routing, epidemic neighbor tables, and physical link drivers for Kite"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kite-core = { path = "../kite-core" }
+kite-crypto = { path = "../kite-crypto" }
+
+[dev-dependencies]
+hex = "0.4"

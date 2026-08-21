@@ -1,0 +1,20 @@
+[package]
+name = "kite-core"
+description = "Core primitives, zero-allocation wire framing, and addressing for Kite protocol"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[features]
+default = ["std"]
+std = []
+
+[dependencies]
+# Embedded-friendly zero-allocation dependencies
+byteorder = { version = "1.5", default-features = false }
+crc32fast = { version = "1.4", default-features = false }
+
+[dev-dependencies]
+hex = "0.4"

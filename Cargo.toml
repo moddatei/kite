@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/kite-core",
+    "crates/kite-crypto",
+    "crates/kite-mesh",
+    "crates/kited",
+    "crates/kitectl",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Kite Protocol Maintainers <maintainers@kite-mesh.org>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/kite-protocol/kite"
+homepage = "https://kite-mesh.org"
+readme = "README.md"
+keywords = ["mesh", "p2p", "noise-protocol", "delay-tolerant", "air-gap"]
+categories = ["network-programming", "cryptography", "embedded", "no-std"]
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.bench]
+opt-level = 3
+lto = "fat"
+debug = true

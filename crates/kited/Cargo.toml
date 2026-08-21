@@ -1,0 +1,17 @@
+[package]
+name = "kited"
+description = "Headless node daemon for the Kite mesh transport protocol"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kite-core = { path = "../kite-core" }
+kite-crypto = { path = "../kite-crypto" }
+kite-mesh = { path = "../kite-mesh" }
+clap = { version = "4.4", features = ["derive"] }
+log = "0.4"
+env_logger = "0.11"
+rand = "0.8"
