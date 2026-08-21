@@ -23,7 +23,6 @@ struct Cli {
     address: Option<String>,
 
     /// Physical RF interface or virtual driver (e.g., "mon0", "lora0", "virtual")
-
     #[arg(short, long, default_value = "virtual")]
     interface: String,
 
@@ -44,11 +43,8 @@ fn main() {
     let args = Cli::parse();
 
     let node_addr = if let Some(addr_str) = args.address {
-        let cleaned = addr_str.trim_start_matches("0x");
-        let bytes = hex::decode(cleaned).unwrap_or_else(|_| vec![0x42; 8]);
-        let mut arr = [0u8; 8];
-        arr.copy_from_slice(&bytes[..8]);
-        NodeAddress::from_bytes(arr)
+        NodeAddress::from_hex(&addr_str)
+            .unwrap_or_else(|_| NodeAddress::from_bytes([0x42; 8]))
     } else {
         NodeAddress::from_bytes([0x0A, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77])
     };

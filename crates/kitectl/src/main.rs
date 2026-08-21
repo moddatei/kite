@@ -106,12 +106,8 @@ fn main() {
         }
 
         Commands::Whisper { dst, message, ttl } => {
-            let cleaned = dst.trim_start_matches("0x");
-            let dst_bytes = hex::decode(cleaned).unwrap_or_else(|_| vec![0xFF; 8]);
-            let mut arr = [0u8; 8];
-            let copy_len = std::cmp::min(8, dst_bytes.len());
-            arr[..copy_len].copy_from_slice(&dst_bytes[..copy_len]);
-            let target_addr = NodeAddress::from_bytes(arr);
+            let target_addr = NodeAddress::from_hex(&dst)
+                .unwrap_or_else(|_| NodeAddress::from_bytes([0xFF; 8]));
 
             let self_addr =
                 NodeAddress::from_bytes([0x0A, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77]);

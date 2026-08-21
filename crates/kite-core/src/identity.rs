@@ -1,5 +1,6 @@
 //! Cryptographic node identities and addresses for the Kite mesh network.
 
+use crate::error::{Error, Result};
 use core::fmt;
 
 /// Length of standard 32-byte public key (Ed25519 / X25519).
@@ -81,6 +82,27 @@ impl NodeAddress {
     /// Check if this address matches the broadcast address.
     pub fn is_broadcast(&self) -> bool {
         self == &Self::BROADCAST
+    }
+
+    /// Parse from a hexadecimal string (with or without '0x' prefix).
+    pub fn from_hex(s: &str) -> Result<Self> {
+        let cleaned = s.trim_start_matches("0x").trim_start_matches("0X");
+        if cleaned.len() > SHORT_ADDR_LEN * 2 {
+            return Err(Error::InvalidAddress);
+        }
+        let mut bytes = [0u8; SHORT_ADDR_LEN];
+        let pad_len = SHORT_ADDR_LEN * 2 - cleaned.len();
+        for (i, c) in cleaned.chars().enumerate() {
+            let digit = c.to_digit(16).ok_or(Error::InvalidAddress)? as u8;
+            let target_pos = pad_len + i;
+            let byte_idx = target_pos / 2;
+            if target_pos % 2 == 0 {
+                bytes[byte_idx] |= digit << 4;
+            } else {
+                bytes[byte_idx] |= digit;
+            }
+        }
+        Ok(Self(bytes))
     }
 }
 
